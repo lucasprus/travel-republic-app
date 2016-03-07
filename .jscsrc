@@ -1,6 +1,6 @@
 {
-  "requireCamelCaseOrUpperCaseIdentifiers": true,
-  "requireCapitalizedConstructors": true,
-  "requireParenthesesAroundIIFE": true,
-  "validateQuoteMarks": "'"
+    "preset": "jquery",
+    "validateIndentation": 4,
+    "validateQuoteMarks": { "mark": "'", "escape": true },
+    "maximumLineLength": 200
 }
