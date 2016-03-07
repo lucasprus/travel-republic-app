@@ -1,0 +1,69 @@
+<form class="form-inline">
+    <div class="form-group">
+        <label class="control-label">Name</label>
+        <div>
+            <input
+                type="text"
+                ng-model="filters.name"
+                ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+                ng-trim="true"
+                class="form-control">
+        </div>
+    </div>
+    <br><br>
+
+    <div class="form-group">
+        <label class="control-label">Stars from</label>
+        <div>
+            <select
+                ng-model="filters.starsFrom"
+                ng-change="updateStarsTo()"
+                convert-to-number
+                class="form-control">
+                    <option ng-repeat="s in stars" value="{{ s }}">{{ s }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Stars to</label>
+        <div>
+            <select
+                ng-model="filters.starsTo"
+                ng-change="updateStarsFrom()"
+                convert-to-number
+                class="form-control">
+                    <option ng-repeat="s in stars" value="{{ s }}">{{ s }}</option>
+            </select>
+        </div>
+    </div>
+    <br><br>
+
+    <div class="form-group">
+        <label class="control-label">User Rating from</label>
+        <div>
+            <select
+                ng-model="filters.userRatingFrom"
+                ng-change="updateUserRatingTo()"
+                class="form-control">
+                    <option ng-repeat="rating in userRatings" value="{{ rating }}">{{ rating }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">User Rating to</label>
+        <div>
+            <select
+                ng-model="filters.userRatingTo"
+                ng-change="updateUserRatingFrom()"
+                class="form-control">
+                    <option ng-repeat="rating in userRatings" value="{{ rating }}">{{ rating }}</option>
+            </select>
+        </div>
+    </div>
+</form>
+
+<!-- <pre>{{ filters |json }}</pre> -->
+
+<div ui-view=""></div>
