@@ -14,7 +14,3 @@ Run `node app` and you should see 'Example app listening on port 3000!'
 ## Build & development
 
 In a new console tab run `grunt serve` for preview.
-
-## Testing
-
-Running `grunt test` will run the unit tests with karma.
