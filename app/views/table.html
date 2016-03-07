@@ -1,3 +1,7 @@
+<div class="well" ng-if="hotels && hotels.length > 0">
+    Total number of results: {{ resultsTotal }}
+</div>
+
 <nav ng-if="hotels && hotels.length > 0">
     <ul class="pagination">
         <li ng-if="page > 1">
@@ -32,43 +36,43 @@
             <th>#</th>
             <th>Distance
                 <a href="" ng-click="toggleOrder( 'Distance', 'asc' )">
-                    <span class="glyphicon glyphicon-sort-by-attributes" ng-class="{ active: orderBy === 'Distance' && order === 'asc' }">
+                    <span class="glyphicon glyphicon-sort-by-attributes" ng-class="{ active: filters.orderBy === 'Distance' && filters.order === 'asc' }">
                     </span>
                 </a>
                 <a href="" ng-click="toggleOrder( 'Distance', 'desc' )">
-                    <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-class="{ active: orderBy === 'Distance' && order === 'desc' }">
+                    <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-class="{ active: filters.orderBy === 'Distance' && filters.order === 'desc' }">
                     </span>
                 </a>
             </th>
             <th>Location</th>
             <th>Minimum Cost
                 <a href="" ng-click="toggleOrder( 'MinCost', 'asc' )">
-                    <span class="glyphicon glyphicon-sort-by-attributes" ng-class="{ active: orderBy === 'MinCost' && order === 'asc' }">
+                    <span class="glyphicon glyphicon-sort-by-attributes" ng-class="{ active: filters.orderBy === 'MinCost' && filters.order === 'asc' }">
                     </span>
                 </a>
                 <a href="" ng-click="toggleOrder( 'MinCost', 'desc' )">
-                    <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-class="{ active: orderBy === 'MinCost' && order === 'desc' }">
+                    <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-class="{ active: filters.orderBy === 'MinCost' && filters.order === 'desc' }">
                     </span>
                 </a>
             </th>
             <th>Name</th>
             <th>Stars
                 <a href="" ng-click="toggleOrder( 'Stars', 'asc' )">
-                    <span class="glyphicon glyphicon-sort-by-attributes" ng-class="{ active: orderBy === 'Stars' && order === 'asc' }">
+                    <span class="glyphicon glyphicon-sort-by-attributes" ng-class="{ active: filters.orderBy === 'Stars' && filters.order === 'asc' }">
                     </span>
                 </a>
                 <a href="" ng-click="toggleOrder( 'Stars', 'desc' )">
-                    <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-class="{ active: orderBy === 'Stars' && order === 'desc' }">
+                    <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-class="{ active: filters.orderBy === 'Stars' && filters.order === 'desc' }">
                     </span>
                 </a>
             </th>
             <th>User Rating
                 <a href="" ng-click="toggleOrder( 'UserRating', 'asc' )">
-                    <span class="glyphicon glyphicon-sort-by-attributes" ng-class="{ active: orderBy === 'UserRating' && order === 'asc' }">
+                    <span class="glyphicon glyphicon-sort-by-attributes" ng-class="{ active: filters.orderBy === 'UserRating' && filters.order === 'asc' }">
                     </span>
                 </a>
                 <a href="" ng-click="toggleOrder( 'UserRating', 'desc' )">
-                    <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-class="{ active: orderBy === 'UserRating' && order === 'desc' }">
+                    <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-class="{ active: filters.orderBy === 'UserRating' && filters.order === 'desc' }">
                     </span>
                 </a>
             </th>

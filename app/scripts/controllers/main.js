@@ -8,13 +8,15 @@
  * Controller of the travelRepublicApp
  */
 angular.module( 'travelRepublicApp' )
-    .controller( 'MainCtrl', function( $scope, $state, $q, $log ) {
+    .controller( 'MainCtrl', function( $scope ) {
         $scope.filters = {
             name: '',
             starsFrom: 1,
             starsTo: 5,
             userRatingFrom: 'Unrated',
-            userRatingTo: 'Spectacular'
+            userRatingTo: 'Spectacular',
+            orderBy: null,
+            order: null
         };
 
         var userRatings = [ 'Unrated', 'Very Poor', 'Poor', 'Unsatisfactory', 'Below Average', 'Average',
@@ -23,67 +25,57 @@ angular.module( 'travelRepublicApp' )
 
         $scope.stars = [ 1, 2, 3, 4, 5 ];
 
-        $scope.orderBy = null;
-        $scope.order = null;
-
         $scope.toggleOrder = function( orderBy, order ) {
-            if ( $scope.orderBy === orderBy && $scope.order === order ) {
-                $scope.orderBy = null;
+            var filters = $scope.filters;
+            if ( filters.orderBy === orderBy && filters.order === order ) {
+                filters.orderBy = null;
             } else {
-                $scope.orderBy = orderBy;
-                $scope.order = order;
+                filters.orderBy = orderBy;
+                filters.order = order;
             }
-
-            $scope.deferred = $q.defer();
-            $state.go( 'index.table', { page: 1 }, { reload: 'index.table' } );
         };
 
-        $scope.deferred = $q.defer();
-
-        $scope.$watchCollection( 'filters', function( newValue, oldValue ) {
-            if ( newValue === oldValue ) {
-                return;
-            }
-            $log.log( newValue, oldValue );
-
-            $scope.deferred.resolve( 'New request' );
-            $scope.deferred = $q.defer();
-            $state.go( 'index.table', { page: 1 }, { reload: 'index.table' } );
-        } );
-
         $scope.updateStarsTo = function() {
-            var starsFrom = $scope.filters.starsFrom;
-            var starsTo = $scope.filters.starsTo;
+            var filters = $scope.filters;
+
+            var starsFrom = filters.starsFrom;
+            var starsTo = filters.starsTo;
 
             if ( starsFrom > starsTo ) {
-                $scope.filters.starsTo = starsFrom;
+                filters.starsTo = starsFrom;
             }
         };
 
         $scope.updateStarsFrom = function() {
-            var starsFrom = $scope.filters.starsFrom;
-            var starsTo = $scope.filters.starsTo;
+            var filters = $scope.filters;
+
+            var starsFrom = filters.starsFrom;
+            var starsTo = filters.starsTo;
 
             if ( starsFrom > starsTo ) {
-                $scope.filters.starsFrom = starsTo;
+                filters.starsFrom = starsTo;
             }
         };
 
         $scope.updateUserRatingTo = function() {
-            var userRatingFrom = $scope.filters.userRatingFrom;
-            var userRatingTo = $scope.filters.userRatingTo;
+            var filters = $scope.filters;
+
+            var userRatingFrom = filters.userRatingFrom;
+            var userRatingTo = filters.userRatingTo;
 
             if ( userRatings.indexOf( userRatingFrom ) > userRatings.indexOf( userRatingTo ) ) {
-                $scope.filters.userRatingTo = userRatingFrom;
+                filters.userRatingTo = userRatingFrom;
             }
         };
 
         $scope.updateUserRatingFrom = function() {
-            var userRatingFrom = $scope.filters.userRatingFrom;
-            var userRatingTo = $scope.filters.userRatingTo;
+            var filters = $scope.filters;
+
+            var userRatingFrom = filters.userRatingFrom;
+            var userRatingTo = filters.userRatingTo;
 
             if ( userRatings.indexOf( userRatingFrom ) > userRatings.indexOf( userRatingTo ) ) {
-                $scope.filters.userRatingFrom = userRatingTo;
+                filters.userRatingFrom = userRatingTo;
             }
         };
     } );
