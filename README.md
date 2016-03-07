@@ -5,7 +5,7 @@ version 0.15.1.
 
 ## Installation
 
-Run `npm install` and 'bower install'
+Run `npm install` and `bower install`
 
 ## Start the API
 
