@@ -47,6 +47,16 @@ app.get( '/hotels/page:page', function( req, res ) {
         results = _.filter( results, function( o ) { return userRatings.indexOf( o.UserRatingTitle ) <= userRatingToIndex; } );
     }
 
+    if ( req.query.minCostFrom ) {
+        var minCostFrom = parseInt( req.query.minCostFrom, 10 );
+        results = _.filter( results, function( o ) { return o.MinCost >= minCostFrom; } );
+    }
+
+    if ( req.query.minCostTo ) {
+        var minCostTo = parseInt( req.query.minCostTo, 10 );
+        results = _.filter( results, function( o ) { return o.MinCost <= minCostTo; } );
+    }
+
     if ( req.query.orderBy ) {
         var orderBy = req.query.orderBy;
         var order = req.query.order === 'desc' ? 'desc' : 'asc';

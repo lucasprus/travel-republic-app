@@ -1,49 +1,68 @@
-<form class="form-inline">
-    <div class="form-group">
-        <label class="control-label">Name</label>
-        <div>
-            <input type="text" class="form-control" ng-model="filters.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }" ng-trim="true">
-        </div>
-    </div>
-    <br><br>
+<div class="panel panel-default">
+    <div class="panel-heading">Filters</div>
+    <div class="panel-body">
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <div>
+                    <input type="text" class="form-control" ng-model="filters.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }" ng-trim="true">
+                </div>
+            </div>
+            <br><br>
 
-    <div class="form-group">
-        <label class="control-label">Stars from</label>
-        <div>
-            <select class="form-control" ng-model="filters.starsFrom" ng-change="updateStars( 'To' )">
-                <option ng-repeat="s in stars" value="{{ s }}">{{ s }}</option>
-            </select>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="control-label">Stars from</label>
+                <div>
+                    <select class="form-control" ng-model="filters.starsFrom" ng-change="updateStars( 'To' )">
+                        <option ng-repeat="s in stars" value="{{ s }}">{{ s }}</option>
+                    </select>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="control-label">Stars to</label>
-        <div>
-            <select class="form-control" ng-model="filters.starsTo" ng-change="updateStars( 'From' )">
-                <option ng-repeat="s in stars" value="{{ s }}">{{ s }}</option>
-            </select>
-        </div>
-    </div>
-    <br><br>
+            <div class="form-group">
+                <label class="control-label">Stars to</label>
+                <div>
+                    <select class="form-control" ng-model="filters.starsTo" ng-change="updateStars( 'From' )">
+                        <option ng-repeat="s in stars" value="{{ s }}">{{ s }}</option>
+                    </select>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="control-label">User Rating from</label>
-        <div>
-            <select class="form-control" ng-model="filters.userRatingFrom" ng-change="updateUserRating( 'To' )">
-                <option ng-repeat="rating in userRatings" value="{{ rating }}">{{ rating }}</option>
-            </select>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="control-label">User Rating from</label>
+                <div>
+                    <select class="form-control" ng-model="filters.userRatingFrom" ng-change="updateUserRating( 'To' )">
+                        <option ng-repeat="rating in userRatings" value="{{ rating }}">{{ rating }}</option>
+                    </select>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="control-label">User Rating to</label>
-        <div>
-            <select class="form-control" ng-model="filters.userRatingTo" ng-change="updateUserRating( 'From' )">
-                <option ng-repeat="rating in userRatings" value="{{ rating }}">{{ rating }}</option>
-            </select>
-        </div>
-    </div>
-</form>
+            <div class="form-group">
+                <label class="control-label">User Rating to</label>
+                <div>
+                    <select class="form-control" ng-model="filters.userRatingTo" ng-change="updateUserRating( 'From' )">
+                        <option ng-repeat="rating in userRatings" value="{{ rating }}">{{ rating }}</option>
+                    </select>
+                </div>
+            </div>
+            <br><br>
+
+            <div class="form-group">
+                <label class="control-label">Minimum Cost from</label>
+                <div>
+                    <input type="number" min="0" class="form-control" ng-model="filters.minCostFrom" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Minimum Cost to</label>
+                <div>
+                    <input type="number" min="0" class="form-control" ng-model="filters.minCostTo" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }">
+                </div>
+            </div>
+        </form>
+  </div>
+</div>
+
 <br><br>
 
 <!-- <pre>filters: {{ filters |json }}</pre> -->

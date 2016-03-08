@@ -16,7 +16,9 @@ angular.module( 'travelRepublicApp' )
             userRatingFrom: 'Unrated',
             userRatingTo: 'Spectacular',
             orderBy: null,
-            order: null
+            order: null,
+            minCostFrom: 0,
+            minCostTo: null
         };
         $scope.filters = filters;
 
