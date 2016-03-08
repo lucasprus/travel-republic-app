@@ -9,24 +9,24 @@
  */
 angular.module( 'travelRepublicApp' )
     .controller( 'MainCtrl', function( $scope ) {
-        $scope.filters = {
+        var filters = {
             name: '',
-            starsFrom: 1,
-            starsTo: 5,
+            starsFrom: '0',
+            starsTo: '5',
             userRatingFrom: 'Unrated',
             userRatingTo: 'Spectacular',
             orderBy: null,
             order: null
         };
+        $scope.filters = filters;
 
         var userRatings = [ 'Unrated', 'Very Poor', 'Poor', 'Unsatisfactory', 'Below Average', 'Average',
             'Above Average', 'Good', 'Very Good', 'Great', 'Excellent', 'Magnificent', 'Exceptional', 'Spectacular' ];
         $scope.userRatings = userRatings;
 
-        $scope.stars = [ 1, 2, 3, 4, 5 ];
+        $scope.stars = [ 0, 1, 2, 3, 4, 5 ];
 
         $scope.toggleOrder = function( orderBy, order ) {
-            var filters = $scope.filters;
             if ( filters.orderBy === orderBy && filters.order === order ) {
                 filters.orderBy = null;
             } else {
@@ -35,47 +35,32 @@ angular.module( 'travelRepublicApp' )
             }
         };
 
-        $scope.updateStarsTo = function() {
-            var filters = $scope.filters;
-
+        $scope.updateStars = function( type ) {
             var starsFrom = filters.starsFrom;
             var starsTo = filters.starsTo;
 
             if ( starsFrom > starsTo ) {
-                filters.starsTo = starsFrom;
+                if ( type === 'To' ) {
+                    filters.starsTo = starsFrom;
+                } if ( type === 'From' ) {
+                    filters.starsFrom = starsTo;
+                }
             }
         };
 
-        $scope.updateStarsFrom = function() {
-            var filters = $scope.filters;
-
-            var starsFrom = filters.starsFrom;
-            var starsTo = filters.starsTo;
-
-            if ( starsFrom > starsTo ) {
-                filters.starsFrom = starsTo;
-            }
-        };
-
-        $scope.updateUserRatingTo = function() {
-            var filters = $scope.filters;
-
+        $scope.updateUserRating = function( type ) {
             var userRatingFrom = filters.userRatingFrom;
             var userRatingTo = filters.userRatingTo;
 
-            if ( userRatings.indexOf( userRatingFrom ) > userRatings.indexOf( userRatingTo ) ) {
-                filters.userRatingTo = userRatingFrom;
-            }
-        };
+            var fromIndex = userRatings.indexOf( userRatingFrom );
+            var toIndex = userRatings.indexOf( userRatingTo );
 
-        $scope.updateUserRatingFrom = function() {
-            var filters = $scope.filters;
-
-            var userRatingFrom = filters.userRatingFrom;
-            var userRatingTo = filters.userRatingTo;
-
-            if ( userRatings.indexOf( userRatingFrom ) > userRatings.indexOf( userRatingTo ) ) {
-                filters.userRatingFrom = userRatingTo;
+            if ( fromIndex > toIndex ) {
+                if ( type === 'To' ) {
+                    filters.userRatingTo = userRatingFrom;
+                } if ( type === 'From' ) {
+                    filters.userRatingFrom = userRatingTo;
+                }
             }
         };
     } );

@@ -8,15 +8,14 @@
  * Controller of the travelRepublicApp
  */
 angular.module( 'travelRepublicApp' )
-    .controller( 'TableCtrl', function( $scope, $http, $q, $stateParams, $log, $state ) {
+    .controller( 'TableCtrl', function( $scope, $http, $q, $stateParams, $log, $state, CONFIG ) {
         var page = parseInt( $stateParams.page, 10 );
         $scope.page = page;
-        var offset = 3;
 
         $scope.$watchCollection( 'filters', function( newValue, oldValue ) {
             if ( newValue === oldValue ) {
                 $scope.deferred = $q.defer();
-                makeRequest();
+                getResults();
                 return;
             }
             $log.log( newValue, oldValue );
@@ -38,35 +37,42 @@ angular.module( 'travelRepublicApp' )
             return result;
         };
 
-        var makeRequest = function() {
+        var paginationRange = function( currentPage, offset, pagesTotal ) {
+            var start, end;
+
+            if ( pagesTotal <= 2 * offset + 1 ) {
+                start = 1;
+                end = pagesTotal;
+            } else if ( currentPage - offset <= 0 ) {
+                start = 1;
+                end = 2 * offset + 1;
+            } else if ( currentPage + offset > pagesTotal ) {
+                start = pagesTotal - 2 * offset;
+                end = pagesTotal;
+            } else {
+                start = currentPage - offset;
+                end = currentPage + offset;
+            }
+
+            return range( start, end );
+        };
+
+        var getResults = function() {
             $log.log( 'Starting request' );
 
-            $http.get( 'http://localhost:3000/hotels/page' + page, {
+            $http.get( CONFIG.apiURL + page, {
                     timeout: $scope.deferred.promise,
                     params: $scope.filters
                 } ).then( function( data ) {
                     data = data.data;
-                    $scope.hotels = data.data;
+                    $scope.hotels = data.results;
                     $scope.resultsTotal = data.resultsTotal;
                     $scope.resultsPerPage = data.resultsPerPage;
 
                     var pagesTotal = Math.ceil( data.resultsTotal / data.resultsPerPage );
-
                     $scope.pagesTotal = pagesTotal;
-
-                    if ( pagesTotal <= 2 * offset + 1 ) {
-                        $scope.pagesRange = range( 1, pagesTotal );
-                    } else {
-                        if ( page - offset <= 0 ) {
-                            $scope.pagesRange = range( 1, 2 * offset + 1 );
-                        } else if ( page + offset > pagesTotal ) {
-                            $scope.pagesRange = range( pagesTotal - 2 * offset, pagesTotal );
-                        } else {
-                            $scope.pagesRange = range( page - offset, page + offset );
-                        }
-                    }
+                    $scope.paginationRange = paginationRange( page, CONFIG.paginationOffset, pagesTotal );
                 }, function( data ) {
-                    $log.log( data );
                     if ( data.status === -1 ) {
                         $log.log( 'Cancelled request' );
                     }

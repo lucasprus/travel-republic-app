@@ -35,16 +35,7 @@ angular
 
         $urlRouterProvider.otherwise( '/page1' );
     } )
-    .directive( 'convertToNumber', function() {
-        return {
-            require: 'ngModel',
-            link: function( scope, element, attrs, ngModel ) {
-                ngModel.$parsers.push( function( val ) {
-                    return parseInt( val, 10 );
-                } );
-                ngModel.$formatters.push( function( val ) {
-                    return '' + val;
-                } );
-            }
-        };
+    .constant( 'CONFIG', {
+        apiURL: 'http://localhost:3000/hotels/page',
+        paginationOffset: 3
     } );

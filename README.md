@@ -14,3 +14,7 @@ Run `node app` and you should see 'Example app listening on port 3000!'
 ## Build & development
 
 In a new console tab run `grunt serve` for preview.
+
+## Notes
+
+EstablishmentId: 2294042 is missing UserRatingTitle

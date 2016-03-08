@@ -14,6 +14,7 @@ var hotels = require( './hotels' ).Establishments;
 
 var userRatings = [ 'Unrated', 'Very Poor', 'Poor', 'Unsatisfactory', 'Below Average', 'Average',
     'Above Average', 'Good', 'Very Good', 'Great', 'Excellent', 'Magnificent', 'Exceptional', 'Spectacular' ];
+var resultsPerPage = 20;
 
 app.get( '/hotels/page:page', function( req, res ) {
     var page = parseInt( req.params.page, 10 );
@@ -52,13 +53,11 @@ app.get( '/hotels/page:page', function( req, res ) {
         results = _.orderBy( results, orderBy, order );
     }
 
-    var resultsPerPage = 20;
-
     var resultsOnPage = results.slice( resultsPerPage * ( page - 1 ), resultsPerPage * page );
     res.header( 'Access-Control-Allow-Origin', '*' );
 
     // sleep(5000);
-    res.send( { data: resultsOnPage, resultsTotal: results.length, resultsPerPage: resultsPerPage } );
+    res.send( { results: resultsOnPage, resultsTotal: results.length, resultsPerPage: resultsPerPage } );
 } );
 
 app.listen( 3000, function() {
