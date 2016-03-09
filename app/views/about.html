@@ -1,1 +1,12 @@
 <p>This is the about view.</p>
+
+<form name="myForm">
+    <value-slider name="mySlider" ng-change="logPrice( price )" ng-model="price" value-slider-min="11" value-slider-max="308"></value-slider>
+
+    Price: {{ price }}
+    <br>
+    <input type="number" ng-model="price">
+
+    <span ng-show="myForm.mySlider.$error.min">Price too low</span>
+    <span ng-show="myForm.mySlider.$error.max">Price too high</span>
+</form>

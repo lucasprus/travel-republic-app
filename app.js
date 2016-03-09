@@ -16,6 +16,18 @@ var userRatings = [ 'Unrated', 'Very Poor', 'Poor', 'Unsatisfactory', 'Below Ave
     'Above Average', 'Good', 'Very Good', 'Great', 'Excellent', 'Magnificent', 'Exceptional', 'Spectacular' ];
 var resultsPerPage = 20;
 
+var lte = function( property, value ) {
+    return function( o ) {
+        return o[ property ] <= value;
+    };
+};
+
+var gte = function( property, value ) {
+    return function( o ) {
+        return o[ property ] >= value;
+    };
+};
+
 app.get( '/hotels/page:page', function( req, res ) {
     var page = parseInt( req.params.page, 10 );
 
@@ -27,12 +39,12 @@ app.get( '/hotels/page:page', function( req, res ) {
 
     if ( req.query.starsFrom ) {
         var starsFrom = parseInt( req.query.starsFrom, 10 );
-        results = _.filter( results, function( o ) { return o.Stars >= starsFrom; } );
+        results = _.filter( results, gte( 'Stars', starsFrom ) );
     }
 
     if ( req.query.starsTo ) {
         var starsTo = parseInt( req.query.starsTo, 10 );
-        results = _.filter( results, function( o ) { return o.Stars <= starsTo; } );
+        results = _.filter( results, lte( 'Stars', starsTo ) );
     }
 
     if ( req.query.userRatingFrom ) {
@@ -49,12 +61,12 @@ app.get( '/hotels/page:page', function( req, res ) {
 
     if ( req.query.minCostFrom ) {
         var minCostFrom = parseInt( req.query.minCostFrom, 10 );
-        results = _.filter( results, function( o ) { return o.MinCost >= minCostFrom; } );
+        results = _.filter( results, gte( 'MinCost', minCostFrom ) );
     }
 
     if ( req.query.minCostTo ) {
         var minCostTo = parseInt( req.query.minCostTo, 10 );
-        results = _.filter( results, function( o ) { return o.MinCost <= minCostTo; } );
+        results = _.filter( results, lte( 'MinCost', minCostTo ) );
     }
 
     if ( req.query.orderBy ) {

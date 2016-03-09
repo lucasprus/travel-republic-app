@@ -8,10 +8,8 @@
  * Controller of the travelRepublicApp
  */
 angular.module( 'travelRepublicApp' )
-    .controller( 'AboutCtrl', function() {
-        this.awesomeThings = [
-            'HTML5 Boilerplate',
-            'AngularJS',
-            'Karma'
-        ];
+    .controller( 'AboutCtrl', function( $scope, $log ) {
+        $scope.logPrice = function( price ) {
+            $log.info( price );
+        };
     } );

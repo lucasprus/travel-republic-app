@@ -29,8 +29,7 @@ angular
         .state( 'about', {
             url: '/about',
             templateUrl: 'views/about.html',
-            controller: 'AboutCtrl',
-            controllerAs: 'about'
+            controller: 'AboutCtrl'
         } );
 
         $urlRouterProvider.otherwise( '/page1' );
