@@ -12,4 +12,6 @@ angular.module( 'travelRepublicApp' )
         $scope.logPrice = function( price ) {
             $log.info( price );
         };
+
+        $scope.price = 38;
     } );

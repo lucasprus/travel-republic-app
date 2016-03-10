@@ -24,37 +24,36 @@ angular.module( 'travelRepublicApp' )
                     throw 'valueSlider: valueSliderMin cannot be greater than valueSliderMax';
                 }
 
-                angular.element( $window ).bind( 'resize', function() {
-                    $log.info( 'window resize' );
-                } );
-
-                var startX = 0, x = 0;
-                var handlePosition = 0;
-
                 var handle = element.find( 'span' );
-
-                var track = element.find( 'div' );
+                var track = element.find( 'div' ).first();
                 track.css( {
-                    border: '1px solid black'
+                    'border-top': '1px solid black',
+                    'border-bottom': '1px solid black'
                 } );
-                var trackWidth = parseInt( track.css( 'width' ), 10 );
+
+                var trackWidth;
+                var setTrackWidth = function() {
+                    trackWidth = parseInt( track.css( 'width' ), 10 );
+                };
+                setTrackWidth();
+                angular.element( $window ).bind( 'resize', setTrackWidth );
+
+                var getHandleLeftPx = function() {
+                    return parseInt( handle.css( 'left' ), 10 );
+                };
 
                 handle.css( {
                     position: 'relative',
-                    border: '1px solid red',
                     backgroundColor: 'lightgrey',
                     cursor: 'pointer',
                     display: 'block',
-                    width: '65px',
-                    top: '-10px'
+                    width: '50px',
+                    height: '20px',
+                    top: '-10px',
+                    left: '0'
                 } );
 
                 if ( ngModel ) {
-                    ngModel.$parsers.push( function( value ) {
-                        $log.log( 'parser', value );
-                        return parseInt( value, 10 );
-                    } );
-
                     ngModel.$validators.min = function( modelValue, viewValue ) {
                         var value = modelValue || viewValue;
                         return value >= min;
@@ -66,37 +65,39 @@ angular.module( 'travelRepublicApp' )
                     };
 
                     var render = function() {
-                        if ( ngModel.$viewValue >= min && ngModel.$viewValue <= max ) {
-                            handlePosition = ( ngModel.$viewValue - min ) / ( max - min ) * trackWidth || 0;
-                            handle.css( 'left', handlePosition + 'px' );
+                        if ( ngModel.$modelValue >= min && ngModel.$modelValue <= max ) {
+                            handle.css( 'left', ( ngModel.$modelValue - min ) / ( max - min ) * 100 + '%' );
                         }
                     };
 
                     ngModel.$render = render;
                 }
 
+                var startX;
+
                 handle.on( 'mousedown', function( event ) {
 
                     // Prevent default dragging of selected content
                     event.preventDefault();
-                    startX = event.screenX - handlePosition;
+                    startX = event.screenX - getHandleLeftPx();
                     $document.on( 'mousemove', mousemove );
                     $document.on( 'mouseup', mouseup );
                 } );
 
                 function mousemove( event ) {
-                    x = event.screenX - startX;
+                    var x = event.screenX - startX;
+                    var left;
 
                     if ( x < 0 ) {
-                        handlePosition = 0;
+                        left = 0;
                     } else if ( x > trackWidth ) {
-                        handlePosition = trackWidth;
+                        left = trackWidth;
                     } else {
-                        handlePosition = x;
+                        left = x;
                     }
 
                     handle.css( {
-                        left:  handlePosition + 'px'
+                        left:  left + 'px'
                     } );
                 }
 
@@ -104,7 +105,9 @@ angular.module( 'travelRepublicApp' )
                     $document.off( 'mousemove', mousemove );
                     $document.off( 'mouseup', mouseup );
                     if ( ngModel ) {
-                        ngModel.$setViewValue( Math.round( min + handlePosition * ( max - min ) / trackWidth ) );
+                        var handleLeftPx = getHandleLeftPx();
+                        ngModel.$setViewValue( Math.round( min + handleLeftPx * ( max - min ) / trackWidth ) );
+                        handle.css( 'left', handleLeftPx / trackWidth * 100 + '%' );
                     }
                 }
             }
