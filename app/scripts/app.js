@@ -37,4 +37,18 @@ angular
     .constant( 'CONFIG', {
         apiURL: 'http://localhost:3000/hotels/page',
         paginationOffset: 3
-    } );
+    } )
+.directive( 'stringToNumber', function() {
+    return {
+        require: 'ngModel',
+        priority: 101,
+        link: function( scope, element, attrs, ngModel ) {
+            ngModel.$parsers.push( function( values ) {
+                angular.forEach( values, function( value, key ) {
+                    values[ key ] = parseFloat( value, 10 );
+                } );
+                return values;
+            } );
+        }
+    };
+} );

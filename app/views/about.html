@@ -1,14 +1,19 @@
 <p>This is the about view.</p>
 
 <form name="myForm">
-    <value-slider name="mySlider" ng-change="logPrice( price )" ng-model="price" value-slider-min="11" value-slider-max="308"></value-slider>
-
+    <value-slider name="mySlider" ng-model="price" ng-change="logPrice( price )" value-slider-min="11" value-slider-max="308"></value-slider>
+    <br>
+    <value-slider value-slider-min="11" value-slider-max="308"></value-slider>
+    <br>
+    <value-slider ng-model="rating" ng-change="logPrice( rating )" value-slider-min="11" value-slider-max="308"></value-slider>
+    <br>
     Price: {{ price }}
     <br>
-    <input type="number" ng-model="price">
-    <input type="text" ng-model="price">
+    Rating: {{ rating }}
+    <br>
+    <input ng-model="price" ng-model-options="{ updateOn: 'blur' }" ng-list string-to-number>
+    <input ng-model="rating" ng-model-options="{ updateOn: 'blur' }" ng-list string-to-number>
 
-    <span ng-show="myForm.mySlider.$error.min">Price too low</span>
-    <span ng-show="myForm.mySlider.$error.max">Price too high</span>
-    <value-slider name="mySlider" value-slider-min="11" value-slider-max="308"></value-slider>
+    <p ng-show="myForm.mySlider.$error.min">Price too low</p>
+    <p ng-show="myForm.mySlider.$error.max">Price too high</p>
 </form>
